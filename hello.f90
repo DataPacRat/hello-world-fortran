@@ -28,7 +28,7 @@ program hello
     write(*,*) "phi: ",phi
     write(*,*) "e: ",e
     write(*,*) "i: ",i
-  euler = (e ** (pi * i)) + 1
+    euler = (e ** (pi * i)) + 1
     write(*,*) "e^(pi*i)+1:", euler
     if (euler == (0.0,0.0)) then
         write(*,*) 'Math works :)'
