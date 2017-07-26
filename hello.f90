@@ -10,29 +10,53 @@ program hello
 ! I plan on using it as a template to throw in better coding practices
 ! as I learn them.
 !
+
+! If this program used external modules, they'd be declared here.
+
     implicit none
     ! Without the previous line, Fortran has a weird default behaviour:
     ! variables starting with i through n are integers, the rest reals.
-    real :: a, b, c
+
+! I'm going to try to create some double-precision and quad-precision
+! variables here.
+    integer, parameter :: sp = kind(1.0)
+    integer, parameter :: dp = selected_real_kind(2*precision(1.0_sp))
+    integer, parameter :: qp = selected_real_kind(2*precision(1.0_dp))
+
+! variable declarations
+    real(kind=sp) :: a, b, c
     integer :: j, k, l
-    complex :: euler
-    real, parameter :: pi = 4.0 * atan(1.0)
-    ! parameters can't be changed after initial assignment.
-    real, parameter :: phi = (1.0 + (5.0 ** 0.5)) / 2.0
-    real, parameter :: e = exp(1.0)
-    complex, parameter :: i = (0,1) ! sqrt(-1)
-    character (len = 11) :: word ! word holds 11 characters
+
+    complex(kind=qp) :: euler
+    real(kind=qp) :: eulerreal, eulerimaginary
+    real(kind=qp) :: epsilonquad = 3.0e-34
+
+! parameters can't be changed after initial assignment.
+    real(kind=qp), parameter :: pi = (4.0_qp * atan(1.0_qp))
+!    pi = 3.14159265358979323846264338327950288419716939937510_qp
+    real(kind=qp), parameter :: phi = (1.0_qp + (5.0_qp ** 0.5_qp)) / 2.0_qp
+!    phi = 1.61803398874989484820458683436563811772030917980576286213544862270526046281890_qp
+    real(kind=qp), parameter :: e = exp(1.0_qp)
+!    e = 2.71828182845904523536028747135266249775724709369995_qp
+    complex(kind=qp), parameter :: i = (0.0_qp,1.0_qp)
+! i = sqrt(-1)
+    character (len = 11) :: word
+! word is a string holding 11 characters
+
+! program code
     word = "Hello World"
     write (*,*) "Hello World"
-    write(*,*) "pi: ",pi
-    write(*,*) "phi: ",phi
-    write(*,*) "e: ",e
-    write(*,*) "i: ",i
-    euler = (e ** (pi * i)) + 1.0
+    write(*,*) "pi: ", pi
+    write(*,*) "phi: ", phi
+    write(*,*) "e: ", e
+    write(*,*) "i: ", i
+    euler = (e ** (pi * i)) + 1.0_qp
     write(*,*) "e^(pi*i)+1:", euler
-    if (euler == (0.0,0.0)) then
-        write(*,*) 'Math works :)'
-    elseif (euler /= (0.0,0.0)) then
+    eulerreal = realpart(euler)
+    eulerimaginary = imagpart(euler)
+    if ((abs(eulerreal-0.0_qp) < epsilonquad).and.((abs(eulerimaginary-0.0_qp) < epsilonquad))) then
+        write(*,*) 'Math works, close enough. :)'
+    elseif (euler /= (0.0_qp,0.0_qp)) then
         write(*,*) "Looks like math doesn't work. :("
     else
         write(*,*) "Looks like logic doesn't work either. :("
