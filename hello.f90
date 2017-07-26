@@ -25,7 +25,10 @@ program hello
 
 ! variable declarations
     real(kind=sp) :: a, b, c
-    integer :: j, k, l
+    integer :: j = b'00011001', k = o'31', l = 25, m = z'19'
+
+! Previous line should have initialized all four variables to
+! the same value, in binary, octal, decimal, and hexidecimal.
 
     complex(kind=qp) :: euler
     real(kind=qp) :: eulerreal, eulerimaginary
@@ -40,18 +43,24 @@ program hello
 !    e = 2.71828182845904523536028747135266249775724709369995_qp
     complex(kind=qp), parameter :: i = (0.0_qp,1.0_qp)
 ! i = sqrt(-1)
-    character (len = 11) :: word
+    logical, parameter :: true = .true., false = .false.
+    character (len = 11) :: word = "Hello World"
 ! word is a string holding 11 characters
 
 ! program code
-    word = "Hello World"
+
     write (*,*) "Hello World"
+    ! the classic line
+
     write(*,*) "pi: ", pi
     write(*,*) "phi: ", phi
     write(*,*) "e: ", e
     write(*,*) "i: ", i
+    ! print the numbers to see if the formulas generated the
+    ! right results.
+
     euler = (e ** (pi * i)) + 1.0_qp
-    write(*,*) "e^(pi*i)+1:", euler
+    write(*,*) "e^(pi*i)+1: ", euler
     eulerreal = realpart(euler)
     eulerimaginary = imagpart(euler)
     if ((abs(eulerreal-0.0_qp) < epsilonquad).and.((abs(eulerimaginary-0.0_qp) < epsilonquad))) then
@@ -61,6 +70,17 @@ program hello
     else
         write(*,*) "Looks like logic doesn't work either. :("
     endif
+    ! do some basic math at quad-precision to see how accurate it is.
+
+    write(*,*) j, k, l, m
+    ! check that binary, octal, and hexidecimal variable
+    ! assignment works.
+
     write(*,*) word
+    ! No real reason, just needed to use the string to keep the
+    ! compiler from complaining.
+
     stop "Goodbye World"
+    ! Optional command to stop program.
+
 end program hello
