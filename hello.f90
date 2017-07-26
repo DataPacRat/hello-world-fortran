@@ -4,7 +4,7 @@ program hello
 ! Title: Hello World
 ! Authour: DataPacRat <datapacrat@datapacrat.com>
 ! Date: 2017/07/25
-! License: Modified BSD License
+! License: Modified BSD License, aka BSD-3-Clause
 !
 ! Traditional teaching program to demonstrate basic form.
 !
