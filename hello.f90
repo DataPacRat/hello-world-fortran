@@ -17,18 +17,20 @@ program hello
     ! Without the previous line, Fortran has a weird default behaviour:
     ! variables starting with i through n are integers, the rest reals.
 
-! I'm going to try to create some double-precision and quad-precision
-! variables here.
+! Allow creation of double-precision and quad-precision variables.
     integer, parameter :: sp = kind(1.0)
     integer, parameter :: dp = selected_real_kind(2*precision(1.0_sp))
     integer, parameter :: qp = selected_real_kind(2*precision(1.0_dp))
 
 ! variable declarations
-    real(kind=sp) :: a, b, c
+    real(kind=sp) :: a = 0.0, b = 0.0, c = 0.0
     integer :: j = b'00011001', k = o'31', l = 25, m = z'19'
+    ! Previous line should have initialized all four variables to
+    ! the same value, in binary, octal, decimal, and hexidecimal.
+    ! The 'Nightmare Before Christmas' rule: OCT 31 = DEC 25 :)
 
-! Previous line should have initialized all four variables to
-! the same value, in binary, octal, decimal, and hexidecimal.
+    character (len = 11) :: word = "Hello World"
+    ! word is a string holding 11 characters
 
     complex(kind=qp) :: euler
     real(kind=qp) :: eulerreal, eulerimaginary
@@ -36,16 +38,15 @@ program hello
 
 ! parameters can't be changed after initial assignment.
     real(kind=qp), parameter :: pi = (4.0_qp * atan(1.0_qp))
-!    pi = 3.14159265358979323846264338327950288419716939937510_qp
+    ! pi = 3.14159265358979323846264338327950288419716939937510_qp
     real(kind=qp), parameter :: phi = (1.0_qp + (5.0_qp ** 0.5_qp)) / 2.0_qp
-!    phi = 1.61803398874989484820458683436563811772030917980576286213544862270526046281890_qp
+    ! phi = 1.61803398874989484820458683436563811772030917980576286213544862270526046281890_qp
     real(kind=qp), parameter :: e = exp(1.0_qp)
-!    e = 2.71828182845904523536028747135266249775724709369995_qp
+    ! e = 2.71828182845904523536028747135266249775724709369995_qp
     complex(kind=qp), parameter :: i = (0.0_qp,1.0_qp)
-! i = sqrt(-1)
+    ! i = sqrt(-1)
     logical, parameter :: true = .true., false = .false.
-    character (len = 11) :: word = "Hello World"
-! word is a string holding 11 characters
+    ! true is true, false is false
 
 ! program code
 
